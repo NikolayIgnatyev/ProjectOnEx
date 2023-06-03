@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectOnEx"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Авторизация" Height="263" Width="539">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Width, ElementName=thirdRow}"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border x:Name="firstRow" Margin="5,5,5,5" Grid.ColumnSpan="2">
+            <TextBlock Text="Авторизация" 
+                       FontSize="{Binding ActualHeight, ElementName=firstRow}" 
+                       VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        </Border>
+
+        <Border x:Name="secondRow" Margin="1" Grid.Row="2" Grid.Column="0">
+            <TextBlock x:Name="tblLog" Text="Логин"  
+                       FontSize="{Binding ActualHeight, ElementName=secondRow}" 
+                       VerticalAlignment="Bottom"/>
+        </Border>
+
+        <Border x:Name="secondRowTwo" Grid.Row="2" Grid.Column="1">
+            <TextBox
+                FontSize="{Binding FontSize, ElementName=tblLog}"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblLog}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+        </Border>
+
+        <Border x:Name="thirdRow" Margin="1" Grid.Row="4" Grid.Column="0">
+            <TextBlock x:Name="tblPas" Text="Пароль"  
+                       FontSize="{Binding ActualHeight, ElementName=thirdRow}" 
+                       VerticalAlignment="Bottom"/>
+        </Border>
+
+        <Border x:Name="thirdRowTwo" Grid.Row="4" Grid.Column="1">
+            <TextBox 
+                FontSize="{Binding FontSize, ElementName=tblPas}"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblPas}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+        </Border>
+
+
     </Grid>
-</Window>
+</Window> 
