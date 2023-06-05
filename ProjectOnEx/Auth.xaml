@@ -1,57 +1,72 @@
-﻿<Window x:Class="ProjectOnEx.MainWindow"
+﻿<Window x:Class="ProjectOnEx.Auth"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectOnEx"
         mc:Ignorable="d"
-        Title="Авторизация" Height="263" Width="539">
+        Title="Авторизация" Height="240" Width="442">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{Binding Width, ElementName=thirdRow}"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="{Binding Width, ElementName=placeBtn}"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.7*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.2*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.7*"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="0.7*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border x:Name="firstRow" Margin="5,5,5,5" Grid.ColumnSpan="2">
+        <Border x:Name="firstRow" Margin="5,5,5,5" Grid.ColumnSpan="3">
             <TextBlock Text="Авторизация" 
                        FontSize="{Binding ActualHeight, ElementName=firstRow}" 
                        VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="secondRow" Margin="1" Grid.Row="2" Grid.Column="0">
+        <Border x:Name="secondRow" Margin="1,1,1,1" Grid.Row="2" Grid.Column="0">
             <TextBlock x:Name="tblLog" Text="Логин"  
                        FontSize="{Binding ActualHeight, ElementName=secondRow}" 
                        VerticalAlignment="Bottom"/>
         </Border>
 
-        <Border x:Name="secondRowTwo" Grid.Row="2" Grid.Column="1">
+        <Border x:Name="secondRowTwo" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,5" Grid.RowSpan="2">
             <TextBox
+                x:Name="tbLogin"
                 FontSize="{Binding FontSize, ElementName=tblLog}"
                 TextBlock.LineHeight="{Binding FontSize, ElementName=tblLog}"
-                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"
+                MouseEnter="tb_MouseEnter"/>
         </Border>
 
-        <Border x:Name="thirdRow" Margin="1" Grid.Row="4" Grid.Column="0">
+        <Border x:Name="thirdRow" Margin="1,1,1,1" Grid.Row="4" Grid.Column="0">
             <TextBlock x:Name="tblPas" Text="Пароль"  
                        FontSize="{Binding ActualHeight, ElementName=thirdRow}" 
                        VerticalAlignment="Bottom"/>
         </Border>
 
-        <Border x:Name="thirdRowTwo" Grid.Row="4" Grid.Column="1">
-            <TextBox 
+        <Border x:Name="thirdRowTwo" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
+            <PasswordBox
+                x:Name="tbPass"
                 FontSize="{Binding FontSize, ElementName=tblPas}"
                 TextBlock.LineHeight="{Binding FontSize, ElementName=tblPas}"
-                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"
+                MouseEnter="tb_MouseEnter"/>
         </Border>
 
+        <Border x:Name="placeBtn" Grid.Column="2" Grid.Row="6">
+            <Button
+                Margin="5,0,5,0"
+                FontSize="{Binding FontSize, ElementName=tblPas}"
+                Content="Войти"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblPas}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Click="Button_Click">
+            </Button>
+        </Border>
 
     </Grid>
 </Window> 
