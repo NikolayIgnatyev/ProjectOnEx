@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Auth.xaml">
+    <Page Include="Windows\Auth.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -65,7 +65,7 @@
     </Compile>
     <Compile Include="Classes\WorkerWithDB.cs" />
     <Compile Include="Classes\Validater.cs" />
-    <Compile Include="Auth.xaml.cs">
+    <Compile Include="Windows\Auth.xaml.cs">
       <DependentUpon>Auth.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
