@@ -23,27 +23,35 @@ namespace ProjectOnEx.Classes
             connection.Close();
         }
 
-        public static (bool auth, string role) Autorization(string login, string password)
+        public static (
+            bool auth, 
+            string role,
+            string name,
+            string family) Autorization(string login, string password)
         {
-            string role = "";
+            string role = "", name = "", family = "";
             ConnectOpen();
-            using(SqlCommand cmd = new SqlCommand($"SELECT * FROM Users WHERE login='{login}' AND password='{password}';", connection))
+            using(SqlCommand cmd = new SqlCommand($"SELECT role, name, family " +
+                $"FROM Users " +
+                $"JOIN PerDataUsers ON persData = id_user " +
+                $"WHERE login='{login}' AND password='{password}';", connection))
             {
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Console.WriteLine(role);
-                    role = (string)reader.GetValue(2);
+                    role = (string)reader.GetValue(0);
+                    name = (string)reader.GetValue(1);
+                    family = (string)reader.GetValue(2);
                 }
             }
             ConnectClose();
             if (role != "")
             {
-                return (true,role);
+                return (true, role, name, family);
             }
             else
             {
-                return (false,null);
+                return (false, null, null , null);
             }
         }
     }

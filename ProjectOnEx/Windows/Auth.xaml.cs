@@ -31,10 +31,20 @@ namespace ProjectOnEx
             if (Validater.ValidLenght(tbLogin, 20) &&
                 Validater.ValidLenght(tbPass, 24))
             {
-                (bool isAuth, string role) reply = WorkerWithDB.Autorization(tbLogin.Text, tbPass.Password);
-                if (reply.isAuth)
+                (bool isAuth, 
+                 string role,
+                 string name,
+                 string family) = WorkerWithDB.Autorization(tbLogin.Text, tbPass.Password);
+                if (isAuth)
                 {
-                    MessageBox.Show(reply.role);
+                    new Main(role, name, family).Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Введены неверные данные");
+                    tbLogin.Text = "";
+                    tbPass.Password = "";
                 }
             }
         }
