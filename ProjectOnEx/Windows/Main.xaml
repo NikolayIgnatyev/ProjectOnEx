@@ -43,7 +43,7 @@
                 <TextBlock Text="Месяц:" FontSize="18" Margin="3"/>
                 <ComboBox x:Name="cbMount" Width="100" FontSize="18" 
                           Margin="3" TextBlock.LineHeight="18" 
-                          TextBlock.LineStackingStrategy="BlockLineHeight" SelectionChanged="cbMount_SelectionChanged">
+                          TextBlock.LineStackingStrategy="BlockLineHeight">
                     <TextBlock Text="Январь"/>
                     <TextBlock Text="Февраль"/>
                     <TextBlock Text="Март"/>

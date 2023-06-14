@@ -21,6 +21,7 @@ namespace ProjectOnEx
     /// </summary>
     public partial class Main : Window
     {
+        public int countDays = 0;
         public Main(string role, string name, string family)
         {
             InitializeComponent();
@@ -81,37 +82,68 @@ namespace ProjectOnEx
 
         }
 
-        private void cbMount_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.Columns.Clear();
-            dataGrid.Columns.Add(new DataGridTextColumn
-            {
-                Header = "Студент",
-                Binding = new Binding("Student")
-            });
-            dataGrid.Columns.Add(new DataGridTextColumn
-            {
-                Header = "Комната",
-                Binding = new Binding("Room")
-            });
-            int countDays = 0;
+            int year = 0;
+            int mount = 1;
             try
             {
-                countDays = DateTime.DaysInMonth(int.Parse(tbYear.Text), cbMount.SelectedIndex + 1);
+                year = int.Parse(tbYear.Text);
+                mount = cbMount.SelectedIndex + 1;
+                CreateTable(year, mount);
             }
             catch
             {
                 MessageBox.Show("Неверный формат года!\n" +
-                    "Необходимый формат: 'ГГГГ'",
-                    "Ошибка",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+    "Необходимый формат: 'ГГГГ'",
+    "Ошибка",
+    MessageBoxButton.OK,
+    MessageBoxImage.Error);
+                return;
             }
+            List<Markers> markers = WorkerWithDB.GetMarkers(mount, year);
+            countDays = DateTime.DaysInMonth(year, mount);
+            dataGrid.ItemsSource =  GetItemSource(markers).AsDataView();
+        }
+
+        public DataTable GetItemSource(List<Markers> marks)
+        {
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add(new DataColumn("Комната"));
+            dataTable.Columns.Add(new DataColumn("Студент"));
+
+            for (int i = 1; i < countDays + 1; i++)
+            {
+                dataTable.Columns.Add(i.ToString());
+            }
+
+            for (int j = 0; j < marks.Count; j++)
+            {
+                dataTable.Rows.Add();
+                dataTable.Rows[j]["Комната"] = marks[j].Room;
+                dataTable.Rows[j]["Студент"] = marks[j].Student;
+                dataTable.Rows[j][marks[j].Day + 1] = marks[j].Mark;
+            }
+
+            return dataTable;
+
+        }
+
+        public void CreateTable(int year, int mount)
+        {
+            dataGrid.Columns.Clear();
+            dataGrid.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Комната",
+                Binding = new Binding("Комната")
+            });
+            dataGrid.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Студент",
+                Binding = new Binding("Студент")
+            });
+            countDays = DateTime.DaysInMonth(year, mount);
 
             for (int i = 1; i <= countDays; i++)
             {

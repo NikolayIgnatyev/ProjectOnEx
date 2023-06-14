@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Xml.Linq;
 
 namespace ProjectOnEx.Classes
 {
@@ -48,7 +51,7 @@ namespace ProjectOnEx.Classes
             {
                 using (SqlCommand cmd = new SqlCommand($"SELECT role, name, family " +
     $"FROM Users " +
-    $"JOIN PerDataUsers ON persData = id_user " +
+    $"JOIN PerDataUsers ON persData = IDPerDataUser " +
     $"WHERE login='{login}' AND password='{password}';", connection))
                 {
                     var reader = cmd.ExecuteReader();
@@ -72,40 +75,43 @@ namespace ProjectOnEx.Classes
             }
         }
 
-        public static List<Markers> GetMarkers(int mount)
+        public static List<Markers> GetMarkers(int mount, int year)
         {
             List<Markers> markers = new List<Markers>();
             if (ConnectOpen())
             {
-                int enddate = mount + 1;
-                int year = 2001;
+                int endmount = mount + 1;
                 int endyear = year;
                 if (mount == 12)
                 {
-                    enddate = 1;
+                    endmount = 1;
                     endyear += 1;
-                }
-                connection.Open();
+                } // SQL Б***Ь Е*****Е ПРОБЕЛЫ
                 using (SqlCommand cmd = new SqlCommand($"DECLARE " +
                     $"@startdate datetime = '01-{mount}-{year}', " +
-                    $"@enddate datetime = '01-{enddate}-{endyear}' " +
-                    "SELECT * FROM "Таблица" " +
-                    "WHERE time >= @startdate AND time < @enddate", connection))
+                    $"@enddate datetime = '01-{endmount}-{endyear}' " +
+                    $"SELECT name, family, numRoom, date, mark " +
+                    $"FROM Markers " +
+                    $"JOIN Students ON id_Student = IDStudent " +
+                    $"JOIN Rooms ON id_Room = IDRoom " +
+                    $"WHERE date >= @startdate AND date < @enddate", connection))
                 {
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         markers.Add(new Markers
                         {
-                            Student = (string)reader.GetValue(0),
-                            Room = (string)reader.GetValue(1),
-                            Day = (int)DateTime.Parse(reader.GetValue(2).ToString()).Day
-                            Mark = (char)reader.GetValue(3)
+                            Student = reader.GetString(0) + " " + reader.GetString(1),
+                            Room = reader.GetString(2),
+                            Day = DateTime.Parse(reader.GetValue(3).ToString()).Day,
+                            Mark = Convert.ToChar(reader.GetValue(4))
                         });
                     }
                 }
                 ConnectClose();
+                return markers;
             }
+            return null;
         }
     }
 }
