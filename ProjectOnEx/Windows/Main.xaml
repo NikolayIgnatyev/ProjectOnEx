@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:ProjectOnEx"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="681"
-        MinWidth="450">
+        MinWidth="450" Initialized="Window_Initialized">
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Height="25" Margin="10" HorizontalAlignment="Right" Orientation="Horizontal">
             <TextBlock x:Name="tblRole" Text="role " FontSize="18"/>
             <TextBlock x:Name="tblName" Text="name " FontSize="18"/>
             <TextBlock x:Name="tblFamily" Text="family" FontSize="18"/>
         </StackPanel>
-        <DockPanel x:Name="stackBtn" DockPanel.Dock="Right" Width="200" Margin="10">
+        <DockPanel x:Name="stackBtn" DockPanel.Dock="Left" Width="200" Margin="10">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel x:Name="stackStud">
                     <Button x:Name="btnWriteStud" Margin="5" Content="Записать проживающего"/>
@@ -33,6 +33,32 @@
                 <Button x:Name="btnExit" Margin="5" Width="95" Content="Выход" Click="btnExit_Click"/>
             </StackPanel>
         </DockPanel>
-        <DataGrid x:Name="dataGrid" DockPanel.Dock="Left" Margin="10"></DataGrid>
+        <DockPanel LastChildFill="True">
+            <StackPanel DockPanel.Dock="Top" Height="30" Margin="10" Orientation="Horizontal">
+                <TextBlock Text="Период:" FontSize="18" Margin="3"/>
+                <TextBlock Text="Год:" FontSize="18" Margin="3"/>
+                <TextBox x:Name="tbYear" Width="100" FontSize="18" 
+                         Margin="3" TextBlock.LineHeight="20" 
+                         TextBlock.LineStackingStrategy="BlockLineHeight"/>
+                <TextBlock Text="Месяц:" FontSize="18" Margin="3"/>
+                <ComboBox x:Name="cbMount" Width="100" FontSize="18" 
+                          Margin="3" TextBlock.LineHeight="18" 
+                          TextBlock.LineStackingStrategy="BlockLineHeight">
+                    <TextBlock Text="Январь"/>
+                    <TextBlock Text="Февраль"/>
+                    <TextBlock Text="Март"/>
+                    <TextBlock Text="Апрель"/>
+                    <TextBlock Text="Май"/>
+                    <TextBlock Text="Июнь"/>
+                    <TextBlock Text="Июль"/>
+                    <TextBlock Text="Август"/>
+                    <TextBlock Text="Сентябрь"/>
+                    <TextBlock Text="Октябрь"/>
+                    <TextBlock Text="Ноябрь"/>
+                    <TextBlock Text="Декабрь"/>
+                </ComboBox>
+            </StackPanel>
+            <DataGrid x:Name="dataGrid" DockPanel.Dock="Left" Margin="10"></DataGrid>
+        </DockPanel>
     </DockPanel>
 </Window>

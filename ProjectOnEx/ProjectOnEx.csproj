@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Marker.cs" />
     <Compile Include="Classes\WorkerWithDB.cs" />
     <Compile Include="Classes\Validater.cs" />
     <Compile Include="Windows\Auth.xaml.cs">

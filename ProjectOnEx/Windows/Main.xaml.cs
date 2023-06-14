@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ProjectOnEx.Classes;
 
 namespace ProjectOnEx
 {
@@ -48,10 +49,15 @@ namespace ProjectOnEx
                     stackBtn.Visibility = Visibility.Collapsed;
                     tblRole.Text = "Гость: ";
                     this.Closing += Window_Closed;
+                    dataGrid.IsReadOnly = true;
                     break;
             }
             tblName.Text = name + " ";
             tblFamily.Text = family;
+        }
+
+        public Main()
+        {
 
         }
 
@@ -64,6 +70,23 @@ namespace ProjectOnEx
         private void Window_Closed(object sender, EventArgs e)
         {
             new Auth().Show();
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            cbMount.SelectedIndex = 0;
+            tbYear.Text = DateTime.Now.Year.ToString();
+
+
+            List<Marker> markers = new List<Marker>();
+            markers.Add(new Marker { Student = "Stud123"});
+            dataGrid.AutoGenerateColumns = false;
+            dataGrid.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Stud",
+                Binding = new Binding("Student")
+            });
+            dataGrid.ItemsSource = markers;
         }
     }
 }

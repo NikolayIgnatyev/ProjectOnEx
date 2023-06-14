@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ProjectOnEx.Classes
@@ -13,9 +14,22 @@ namespace ProjectOnEx.Classes
         public static string connectString = "Server=DESKTOP-P6NFPNI\\SQLEXPRESS;Database=Exam;Trusted_Connection=True;";
         public static SqlConnection connection = new SqlConnection(connectString);
 
-        public static void ConnectOpen()
+        public static bool ConnectOpen()
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
+                return true;
+            }
+            catch
+            {
+                MessageBox.Show("Не удается установить соединение с базой данных!",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                return false;
+            }
+            
         }
 
         public static void ConnectClose()
@@ -30,21 +44,24 @@ namespace ProjectOnEx.Classes
             string family) Autorization(string login, string password)
         {
             string role = "", name = "", family = "";
-            ConnectOpen();
-            using(SqlCommand cmd = new SqlCommand($"SELECT role, name, family " +
-                $"FROM Users " +
-                $"JOIN PerDataUsers ON persData = id_user " +
-                $"WHERE login='{login}' AND password='{password}';", connection))
+            if (ConnectOpen())
             {
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlCommand cmd = new SqlCommand($"SELECT role, name, family " +
+    $"FROM Users " +
+    $"JOIN PerDataUsers ON persData = id_user " +
+    $"WHERE login='{login}' AND password='{password}';", connection))
                 {
-                    role = (string)reader.GetValue(0);
-                    name = (string)reader.GetValue(1);
-                    family = (string)reader.GetValue(2);
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        role = (string)reader.GetValue(0);
+                        name = (string)reader.GetValue(1);
+                        family = (string)reader.GetValue(2);
+                    }
                 }
+                ConnectClose();
             }
-            ConnectClose();
+
             if (role != "")
             {
                 return (true, role, name, family);

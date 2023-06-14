@@ -40,6 +40,10 @@ namespace ProjectOnEx
                     new Main(role, name, family).Show();
                     this.Close();
                 }
+                else if (!isAuth && (role == null || name == null || family == null))
+                {
+
+                }
                 else
                 {
                     MessageBox.Show("Введены неверные данные");
