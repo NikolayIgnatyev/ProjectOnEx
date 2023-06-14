@@ -34,7 +34,8 @@
                        VerticalAlignment="Bottom"/>
         </Border>
 
-        <Border x:Name="secondRowTwo" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,5" Grid.RowSpan="2">
+        <Border x:Name="secondRowTwo" Grid.Row="2" Grid.Column="1" 
+                Grid.ColumnSpan="2" Margin="0,0,0,5" Grid.RowSpan="2">
             <TextBox
                 x:Name="tbLogin"
                 FontSize="{Binding FontSize, ElementName=tblLog}"
