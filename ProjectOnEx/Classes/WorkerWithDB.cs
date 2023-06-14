@@ -71,5 +71,28 @@ namespace ProjectOnEx.Classes
                 return (false, null, null , null);
             }
         }
+
+        public static List<Markers> GetMarkers(int mount)
+        {
+            List<Markers> markers = new List<Markers>();
+            if (ConnectOpen())
+            {
+                using (SqlCommand cmd = new SqlCommand($"НАПИСАТЬ СКРИПТ", connection))
+                {
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        markers.Add(new Markers
+                        {
+                            Student = (string)reader.GetValue(0) + " " + (string)reader.GetValue(1), // объедтнение имени и фамилии
+                            Room = (string)reader.GetValue(2),
+                            Mark = (char)reader.GetValue(3),
+                            Day = (int)reader.GetValue(4).
+                        });
+                    }
+                }
+                ConnectClose();
+            }
+        }
     }
 }

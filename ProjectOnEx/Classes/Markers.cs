@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjectOnEx.Classes
 {
-    public class Marker
+    public class Markers
     {
         public string Student { get; set; }
+        public string Room { get; set; }
+        public int Day { get; set; }
         public char Mark { get; set; }
-        public DateTime Date { get; set; }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectOnEx"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="681"
+        Title="MainWindow" Height="450" Width="1080"
         MinWidth="450" Initialized="Window_Initialized">
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Height="25" Margin="10" HorizontalAlignment="Right" Orientation="Horizontal">
@@ -43,7 +43,7 @@
                 <TextBlock Text="Месяц:" FontSize="18" Margin="3"/>
                 <ComboBox x:Name="cbMount" Width="100" FontSize="18" 
                           Margin="3" TextBlock.LineHeight="18" 
-                          TextBlock.LineStackingStrategy="BlockLineHeight">
+                          TextBlock.LineStackingStrategy="BlockLineHeight" SelectionChanged="cbMount_SelectionChanged">
                     <TextBlock Text="Январь"/>
                     <TextBlock Text="Февраль"/>
                     <TextBlock Text="Март"/>
@@ -57,6 +57,9 @@
                     <TextBlock Text="Ноябрь"/>
                     <TextBlock Text="Декабрь"/>
                 </ComboBox>
+                <Button Content="Вывести" Width="100" Margin="3" FontSize="16" Click="Button_Click">
+                    
+                </Button>
             </StackPanel>
             <DataGrid x:Name="dataGrid" DockPanel.Dock="Left" Margin="10"></DataGrid>
         </DockPanel>

@@ -77,16 +77,50 @@ namespace ProjectOnEx
             cbMount.SelectedIndex = 0;
             tbYear.Text = DateTime.Now.Year.ToString();
 
-
-            List<Marker> markers = new List<Marker>();
-            markers.Add(new Marker { Student = "Stud123"});
             dataGrid.AutoGenerateColumns = false;
+
+        }
+
+        private void cbMount_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid.Columns.Clear();
             dataGrid.Columns.Add(new DataGridTextColumn
             {
-                Header = "Stud",
+                Header = "Студент",
                 Binding = new Binding("Student")
             });
-            dataGrid.ItemsSource = markers;
+            dataGrid.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Комната",
+                Binding = new Binding("Room")
+            });
+            int countDays = 0;
+            try
+            {
+                countDays = DateTime.DaysInMonth(int.Parse(tbYear.Text), cbMount.SelectedIndex + 1);
+            }
+            catch
+            {
+                MessageBox.Show("Неверный формат года!\n" +
+                    "Необходимый формат: 'ГГГГ'",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+
+            for (int i = 1; i <= countDays; i++)
+            {
+                dataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = i,
+                    Binding = new Binding(i.ToString())
+                });
+            }
         }
     }
 }
