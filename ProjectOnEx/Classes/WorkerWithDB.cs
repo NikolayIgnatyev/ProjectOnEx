@@ -77,7 +77,6 @@ namespace ProjectOnEx.Classes
             List<Markers> markers = new List<Markers>();
             if (ConnectOpen())
             {
-                int mount = int.Parse(Console.ReadLine());
                 int enddate = mount + 1;
                 int year = 2001;
                 int endyear = year;
@@ -90,14 +89,19 @@ namespace ProjectOnEx.Classes
                 using (SqlCommand cmd = new SqlCommand($"DECLARE " +
                     $"@startdate datetime = '01-{mount}-{year}', " +
                     $"@enddate datetime = '01-{enddate}-{endyear}' " +
-                    "SELECT * FROM dates " +
+                    "SELECT * FROM "Таблица" " +
                     "WHERE time >= @startdate AND time < @enddate", connection))
                 {
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Console.WriteLine(reader.GetValue(0).ToString());
-                        Console.WriteLine("Day " + DateTime.Parse(reader.GetValue(0).ToString()).Day.ToString());
+                        markers.Add(new Markers
+                        {
+                            Student = (string)reader.GetValue(0),
+                            Room = (string)reader.GetValue(1),
+                            Day = (int)DateTime.Parse(reader.GetValue(2).ToString()).Day
+                            Mark = (char)reader.GetValue(3)
+                        });
                     }
                 }
                 ConnectClose();
