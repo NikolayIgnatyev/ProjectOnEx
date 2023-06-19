@@ -1,0 +1,82 @@
+﻿<Window x:Class="ProjectOnEx.Windows.WriteStud"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjectOnEx.Windows"
+        mc:Ignorable="d"
+        Title="WriteStud" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Width, ElementName=thirdRow}"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="{Binding Width, ElementName=placeBtn}"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Border x:Name="secondRow" Margin="1,1,1,1" Grid.Row="1" Grid.Column="0">
+            <TextBlock x:Name="tblName" Text="Имя"  
+                       FontSize="{Binding ActualHeight, ElementName=secondRow}" 
+                       VerticalAlignment="Bottom"/>
+        </Border>
+
+        <Border x:Name="secondRowTwo" Grid.Row="1" Grid.Column="1" 
+                Grid.ColumnSpan="2" Margin="0,0,0,5" Grid.RowSpan="2">
+            <TextBox
+                x:Name="tbName"
+                FontSize="{Binding FontSize, ElementName=tblName}"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblName}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+        </Border>
+
+        <Border x:Name="thirdRow" Margin="1,1,1,1" Grid.Row="3" Grid.Column="0">
+            <TextBlock x:Name="tblFamily" Text="Фамилия"  
+                       FontSize="{Binding ActualHeight, ElementName=thirdRow}" 
+                       VerticalAlignment="Bottom"/>
+        </Border>
+
+        <Border x:Name="thirdRowTwo" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBox
+                x:Name="tbFamily"
+                FontSize="{Binding FontSize, ElementName=tblFamily}"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblFamily}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+        </Border>
+
+        <Border Margin="1,1,1,1" Grid.Row="5" Grid.Column="0">
+            <TextBlock x:Name="tblRoom" Text="Комната"  
+                       FontSize="{Binding ActualHeight, ElementName=thirdRow}" 
+                       VerticalAlignment="Bottom"/>
+        </Border>
+
+        <Border Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBox
+                x:Name="tbRoom"
+                FontSize="{Binding FontSize, ElementName=tblFamily}"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblFamily}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+        </Border>
+
+        <Border x:Name="placeBtn" Grid.Column="2" Grid.Row="7">
+            <Button
+                Margin="5,0,5,0"
+                FontSize="{Binding FontSize, ElementName=tblFamily}"
+                Content="Записать"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblFamily}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Click="Button_Click">
+            </Button>
+        </Border>
+
+    </Grid>
+</Window>

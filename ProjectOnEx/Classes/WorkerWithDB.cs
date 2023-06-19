@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
@@ -14,10 +15,11 @@ namespace ProjectOnEx.Classes
 {
     internal static class WorkerWithDB
     {
-        public static string connectString = "Server=DESKTOP-P6NFPNI\\SQLEXPRESS;Database=Exam;Trusted_Connection=True;";
-        public static SqlConnection connection = new SqlConnection(connectString);
+        #region Private
+        private static string connectString = "Server=DESKTOP-P6NFPNI\\SQLEXPRESS;Database=Exam;Trusted_Connection=True;";
+        private static SqlConnection connection = new SqlConnection(connectString);
 
-        public static bool ConnectOpen()
+        private static bool ConnectOpen()
         {
             try
             {
@@ -35,11 +37,68 @@ namespace ProjectOnEx.Classes
             
         }
 
-        public static void ConnectClose()
+        private static void ConnectClose()
         {
             connection.Close();
         }
 
+        private static int GetIdRoom(string Room)
+        {
+            int id = 0;
+            if (ConnectOpen())
+            {
+                using (SqlCommand cmd = new SqlCommand($"SELECT IDRoom FROM Rooms WHERE numRoom = '{Room}'", connection))
+                {
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        id = (int)reader.GetValue(0);
+                    }
+                }
+                ConnectClose();
+            }
+            return id;
+        }
+
+        private static int GetIdStident(string Name, string Family)
+        {
+            int id = 0;
+            if (ConnectOpen())
+            {
+                using (SqlCommand cmd = new SqlCommand($"SELECT IDStudent " +
+                    $"FROM Students " +
+                    $"WHERE name = '{Name}' AND " +
+                    $"family = '{Family}'", connection))
+                {
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        id = (int)reader.GetValue(0);
+                    }
+                }
+                ConnectClose();
+            }
+            return id;
+        }
+
+        private static bool RemoveAllMarksStudent(int idStudent)
+        {
+            if (ConnectOpen())
+            {
+                using (SqlCommand cmd = new SqlCommand($"DELETE FROM Markers WHERE id_Student = {idStudent}", connection))
+                {
+                    int result = cmd.ExecuteNonQuery();
+                    if (result < 0)
+                    {
+                        return false;
+                    }
+                }
+                ConnectClose();
+            }
+            return true;
+        }
+
+        #endregion
         public static (
             bool auth, 
             string role,
@@ -112,6 +171,76 @@ namespace ProjectOnEx.Classes
                 return markers;
             }
             return null;
+        }
+
+        public static bool WriteStud(string Name, string Family, string Room)
+        {
+            int idRoom = GetIdRoom(Room);
+
+            if (ConnectOpen())
+            {
+                using (SqlCommand cmd = new SqlCommand($"INSERT INTO " +
+                    $"Students (name, family, id_Room) " +
+                    $"VALUES ('{Name}', '{Family}', {idRoom})", connection))
+                {
+                    int result = cmd.ExecuteNonQuery();
+                    if (result < 0)
+                    {
+                        return false;
+                    }
+                }
+                ConnectClose();
+            }
+            return true;
+        }
+
+        public static bool RemoveStud(string Name, string Family)
+        {
+            int idStudent = GetIdStident(Name, Family);
+            if (RemoveAllMarksStudent(idStudent))
+            {
+                if (ConnectOpen())
+                {
+                    using (SqlCommand cmd = new SqlCommand($"DELETE FROM Students " +
+                        $"WHERE name = '{Name}' AND family = '{Family}'", connection))
+                    {
+                        int result = cmd.ExecuteNonQuery();
+                        if (result < 0)
+                        {
+                            return false;
+                        }
+                    }
+                    ConnectClose();
+                }
+            }
+            return true;
+        }
+
+        public static bool WriteMount(List<TableMarks> marks)
+        {
+            if (ConnectOpen())
+            {
+                string query = "";
+
+                foreach (var mark in marks)
+                {
+                    query += $"INSERT INTO Markers (id_Student, date, mark) " +
+                    $"VALUES ((SELECT IDStudent FROM Students WHERE name = '{mark.Name}' AND family = '{mark.Family}'), " +
+                    $"'{mark.Date}', " +
+                    $"'{mark.Mark}'); \t\n";
+                }
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    int result = cmd.ExecuteNonQuery();
+                    if (result < 0)
+                    {
+                        return false;
+                    }
+                }
+                ConnectClose();
+            }
+            return true;
         }
     }
 }

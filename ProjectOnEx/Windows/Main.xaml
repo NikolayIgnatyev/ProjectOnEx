@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ProjectOnEx"
         mc:Ignorable="d"
         Title="Журнал посещаемости" Height="450" Width="1080"
-        MinWidth="450" Initialized="Window_Initialized">
+        MinWidth="450" Initialized="Window_Initialized"
+        Loaded="Window_Loaded">
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Height="25" Margin="10" HorizontalAlignment="Right" Orientation="Horizontal">
             <TextBlock x:Name="tblRole" Text="role " FontSize="18"/>
@@ -16,21 +17,24 @@
         <DockPanel x:Name="stackBtn" DockPanel.Dock="Left" Width="200" Margin="10">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel x:Name="stackStud">
-                    <Button x:Name="btnWriteStud" Margin="5" Content="Записать проживающего"/>
-                    <Button x:Name="btnRemoveStud" Margin="5" Content="Удалить проживающего"/>
-                    <Button x:Name="btnMoveStud" Margin="5" Content="Переселить проживающего"/>
+                    <Button x:Name="btnWriteStud" Margin="5" Content="Записать проживающего" FontSize="14" Click="btnWriteStud_Click"/>
+                    <Button x:Name="btnRemoveStud" Margin="5" Content="Удалить проживающего" FontSize="14" Click="btnRemoveStud_Click"/>
                 </StackPanel>
                 <StackPanel x:Name="stackReport">
-                    <Button x:Name="btnFormReport" Margin="5" Content="Сформировать отчет"/>
+                    <Button x:Name="btnFormReport" Margin="5" Content="Сформировать отчет" FontSize="14" Click="btnFormReport_Click"/>
                 </StackPanel>
                 <StackPanel>
-                    <Button x:Name="btnStartCheck" Margin="5" Content="Начать проверку"/>
-                    <Button x:Name="btnSaveEdit" Margin="5" Content="Сохранить изменения"/>
-                    <Button x:Name="btnSetState" Margin="5" Content="Внести заявление"/>
+                    <Button x:Name="btnSaveEdit" Margin="5" Content="Сохранить изменения" FontSize="14" Click="btnSaveEdit_Click"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="O - Опоздал" FontSize="14"/>
+                    <TextBlock Text="+ - Присутствовал" FontSize="14"/>
+                    <TextBlock Text="H - Отсутвовал" FontSize="14"/>
+                    <TextBlock Text="З - Заявление" FontSize="14"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                <Button x:Name="btnExit" Margin="5" Width="95" Content="Выход" Click="btnExit_Click"/>
+                <Button x:Name="btnExit" Margin="5" Width="95" Content="Выход" Click="btnExit_Click" FontSize="14"/>
             </StackPanel>
         </DockPanel>
         <DockPanel LastChildFill="True">
@@ -61,7 +65,9 @@
                     
                 </Button>
             </StackPanel>
-            <DataGrid x:Name="dataGrid" DockPanel.Dock="Left" Margin="10"></DataGrid>
+            <DataGrid x:Name="dataGrid" DockPanel.Dock="Left" Margin="10"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="True"></DataGrid>
         </DockPanel>
     </DockPanel>
 </Window>

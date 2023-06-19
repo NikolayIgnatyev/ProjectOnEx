@@ -56,5 +56,27 @@ namespace ProjectOnEx.Classes
                 return false;
             }
         }
+
+        public static bool IsChar(string str)
+        {
+            try
+            {
+                if (str != "")
+                {
+                    Console.WriteLine($"len str {str.Length}");
+                    Convert.ToChar(str);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
     }
 }
