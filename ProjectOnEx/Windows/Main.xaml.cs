@@ -126,18 +126,29 @@ namespace ProjectOnEx
 
             dataTable.Columns.Add(new DataColumn("Комната"));
             dataTable.Columns.Add(new DataColumn("Студент"));
+            dataTable.Columns["Студент"].Unique = true;
 
             for (int i = 1; i < countDays + 1; i++)
             {
                 dataTable.Columns.Add(i.ToString());
             }
 
+            int u = 0;
             for (int j = 0; j < marks.Count; j++)
             {
-                dataTable.Rows.Add();
-                dataTable.Rows[j]["Комната"] = marks[j].Room;
-                dataTable.Rows[j]["Студент"] = marks[j].Student;
-                dataTable.Rows[j][marks[j].Day + 1] = marks[j].Mark;
+                try
+                {
+                    dataTable.Rows.Add();
+                    dataTable.Rows[u]["Комната"] = marks[j].Room;
+                    dataTable.Rows[u]["Студент"] = marks[j].Student;
+                    dataTable.Rows[u][marks[j].Day + 1] = marks[j].Mark;
+                    u++;
+                }
+                catch
+                {
+                    dataTable.Rows[u][marks[j].Day + 1] = marks[j].Mark;
+                }
+
             }
 
             return dataTable;

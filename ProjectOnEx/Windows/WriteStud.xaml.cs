@@ -36,6 +36,9 @@ namespace ProjectOnEx.Windows
                     {
                         MessageBox.Show("Студент успешно записан!", "Успех",
                             MessageBoxButton.OK, MessageBoxImage.Information);
+                        tbName.Text = "";
+                        tbFamily.Text = "";
+                        tbRoom.Text = "";
                     }
                     else
                     {

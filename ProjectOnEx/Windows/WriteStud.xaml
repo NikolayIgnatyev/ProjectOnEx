@@ -24,33 +24,32 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-        <Border x:Name="secondRow" Margin="1,1,1,1" Grid.Row="1" Grid.Column="0">
-            <TextBlock x:Name="tblName" Text="Имя"  
-                       FontSize="{Binding ActualHeight, ElementName=secondRow}" 
-                       VerticalAlignment="Bottom"/>
-        </Border>
-
-        <Border x:Name="secondRowTwo" Grid.Row="1" Grid.Column="1" 
-                Grid.ColumnSpan="2" Margin="0,0,0,5" Grid.RowSpan="2">
-            <TextBox
-                x:Name="tbName"
-                FontSize="{Binding FontSize, ElementName=tblName}"
-                TextBlock.LineHeight="{Binding FontSize, ElementName=tblName}"
-                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
-        </Border>
-
-        <Border x:Name="thirdRow" Margin="1,1,1,1" Grid.Row="3" Grid.Column="0">
+        <Border x:Name="thirdRow" Margin="1,1,1,1" Grid.Row="1" Grid.Column="0">
             <TextBlock x:Name="tblFamily" Text="Фамилия"  
                        FontSize="{Binding ActualHeight, ElementName=thirdRow}" 
                        VerticalAlignment="Bottom"/>
         </Border>
 
-        <Border x:Name="thirdRowTwo" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+        <Border x:Name="thirdRowTwo" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <TextBox
                 x:Name="tbFamily"
                 FontSize="{Binding FontSize, ElementName=tblFamily}"
                 TextBlock.LineHeight="{Binding FontSize, ElementName=tblFamily}"
+                TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
+        </Border>
+      
+        <Border x:Name="secondRow" Margin="1,1,1,1" Grid.Row="3" Grid.Column="0">
+            <TextBlock x:Name="tblName" Text="Имя"  
+                       FontSize="{Binding ActualHeight, ElementName=secondRow}" 
+                       VerticalAlignment="Bottom"/>
+        </Border>
+
+        <Border x:Name="secondRowTwo" Grid.Row="3" Grid.Column="1" 
+                Grid.ColumnSpan="2" Margin="0,0,0,5" Grid.RowSpan="2">
+            <TextBox
+                x:Name="tbName"
+                FontSize="{Binding FontSize, ElementName=tblName}"
+                TextBlock.LineHeight="{Binding FontSize, ElementName=tblName}"
                 TextBlock.LineStackingStrategy="BlockLineHeight" Margin="5,0,5,0"/>
         </Border>
 
