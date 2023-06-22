@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Student.cs" />
     <Compile Include="Classes\TableMarks.cs" />
     <Compile Include="Windows\WriteStud.xaml.cs">
       <DependentUpon>WriteStud.xaml</DependentUpon>

@@ -126,31 +126,30 @@ namespace ProjectOnEx
 
             dataTable.Columns.Add(new DataColumn("Комната"));
             dataTable.Columns.Add(new DataColumn("Студент"));
-            dataTable.Columns["Студент"].Unique = true;
 
             for (int i = 1; i < countDays + 1; i++)
             {
                 dataTable.Columns.Add(i.ToString());
             }
+            List<Student> students = WorkerWithDB.GetStudents();
 
-            int u = 0;
-            for (int j = 0; j < marks.Count; j++)
+            for (int i = 0; i < students.Count; i++)
             {
-                try
-                {
-                    dataTable.Rows.Add();
-                    dataTable.Rows[u]["Комната"] = marks[j].Room;
-                    dataTable.Rows[u]["Студент"] = marks[j].Student;
-                    dataTable.Rows[u][marks[j].Day + 1] = marks[j].Mark;
-                    u++;
-                }
-                catch
-                {
-                    dataTable.Rows[u][marks[j].Day + 1] = marks[j].Mark;
-                }
-
+                dataTable.Rows.Add();
+                dataTable.Rows[i]["Комната"] = students[i].Room;
+                dataTable.Rows[i]["Студент"] = students[i].Name + " " + students[i].FirstName;
             }
 
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                for (int j = 0; j < marks.Count; j++)
+                {
+                    if (marks[j].Student == students[i].Name + " " + students[i].FirstName)
+                    {
+                        dataTable.Rows[i][marks[j].Day + 1] = marks[j].Mark;
+                    }
+                }
+            }
             return dataTable;
 
         }
@@ -282,24 +281,20 @@ namespace ProjectOnEx
                     if (j == 0)
                     {
                         room = (((DataRowView)dataGrid.Items[i]).Row.ItemArray[0].ToString());
-                        Console.WriteLine("room");
                     }
                     else if (j == 1)
                     {
                         string[] nameFamily = ((DataRowView)dataGrid.Items[i]).Row.ItemArray[1].ToString().Split(' ');
                         name = nameFamily[0];
                         family = nameFamily[1];
-                        Console.WriteLine("stud");
                     }
                     else
                     {
                         if (((DataRowView)dataGrid.Items[i]).Row.ItemArray[j - 1].ToString() != "")
                         {
-                            Console.WriteLine($"not null {j}");
-                            date = new DateTime(year, mount, j - 1);
                             if (Validater.IsChar(((DataRowView)dataGrid.Items[i]).Row.ItemArray[j - 1].ToString()))
                             {
-                                Console.WriteLine("is char");
+                                date = new DateTime(year, mount, j - 2);
                                 markers.Add(new TableMarks
                                 {
                                     Name = name,
@@ -314,7 +309,7 @@ namespace ProjectOnEx
                 }
             }
 
-            if (WorkerWithDB.WriteMount(markers))
+            if (WorkerWithDB.WriteMount(markers, year, mount))
             {
                 MessageBox.Show("Изменения сохранены", "Успех",
                     MessageBoxButton.OK, MessageBoxImage.Information);

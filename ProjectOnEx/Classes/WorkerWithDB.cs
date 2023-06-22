@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -96,6 +97,28 @@ namespace ProjectOnEx.Classes
                 ConnectClose();
             }
             return true;
+        }
+
+        private static bool Disctint()
+        {
+            if (ConnectOpen())
+            {
+                using (SqlCommand cmd = new SqlCommand($"DELETE T " +
+                    $"FROM ( SELECT * , DupRank = ROW_NUMBER() " +
+                    $"OVER (PARTITION BY id_Student, date ORDER BY (SELECT IDMarker) DESC) " +
+                    $"FROM Markers ) AS T " +
+                    $"WHERE DupRank > 1", connection))
+                {
+                    int result = cmd.ExecuteNonQuery();
+                    if (result < 0)
+                    {
+                        return false;
+                    }
+                }
+                ConnectClose();
+                return true;
+            }
+            return false;
         }
 
         #endregion
@@ -216,7 +239,7 @@ namespace ProjectOnEx.Classes
             return true;
         }
 
-        public static bool WriteMount(List<TableMarks> marks)
+        public static bool WriteMount(List<TableMarks> marks, int year, int mount)
         {
             if (ConnectOpen())
             {
@@ -239,8 +262,38 @@ namespace ProjectOnEx.Classes
                     }
                 }
                 ConnectClose();
+                if (Disctint())
+                {
+                    return true;
+                }
             }
             return true;
+        }
+
+        public static List<Student> GetStudents()
+        {
+            List<Student> students = new List<Student>(); 
+            if (ConnectOpen())
+            {
+                using (SqlCommand cmd = new SqlCommand($"SELECT name, family, numRoom " +
+                    $"FROM Students " +
+                    $"JOIN Rooms " +
+                    $"ON id_Room = IDRoom", connection))
+                {
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        students.Add(new Student
+                        {
+                            Name = reader.GetValue(0).ToString(),
+                            FirstName = reader.GetValue(1).ToString(),
+                            Room = reader.GetValue(2).ToString()
+                        });
+                    }
+                }
+                ConnectClose();
+            }
+            return students;
         }
     }
 }

@@ -63,7 +63,6 @@ namespace ProjectOnEx.Classes
             {
                 if (str != "")
                 {
-                    Console.WriteLine($"len str {str.Length}");
                     Convert.ToChar(str);
                     return true;
                 }
